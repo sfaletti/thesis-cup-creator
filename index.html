@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cup Creator</title>
+    <script src="processing-1.4.1.min.js" type="text/javascript"></script>
+    <script src="three.min.js" type="text/javascript"></script>
+    <script>
+    var bound = false;
+    var creator, display;
+
+    function bindJavascript() {
+        creator = Processing.getInstanceById('cupcreator');
+        display = Processing.getInstanceById('cupdisplay');
+        if (creator != null && display != null) {
+            creator.bindJavascript(this);
+            display.bindJavascript(this);
+            bound = true;
+            display.updateMesh(creator.getSegs(30));
+        }
+        if (!bound) setTimeout(bindJavascript, 250);
+    }
+
+    bindJavascript();
+
+    function updateCurveSegs(inputPoints) {
+        display.updateMesh(creator.getSegs(inputPoints));
+    }
+    </script>
+    <script>
+    var imgs = ['placekitten', 'placesheen', 'fillmurray', 'nicenicejpg'];
+    window.onload = function() {
+        var index = Math.round(Math.random() * (imgs.length-1));
+        var imgLink = "http://" + imgs[index] + ".com/750/200";
+        console.log(imgLink);
+        document.getElementById("inspiration").setAttribute("src", imgLink);
+    };
+    </script>
+    <style>
+    h1{
+        text-align: center;
+    }
+    #content {
+        width: 765px;
+        display: block;
+        margin: 0 auto;
+    }
+    .cup-creator{
+        width: auto;
+        margin-left: -4px;
+    }
+    #cupcreator {
+        border: 1px solid black;
+        border-left: 10px solid black;
+        margin-left: -5px;
+    }
+    canvas {
+        border: 1px solid black;
+    }
+    .inspiration {
+        display: block;
+        height: 200px;
+        margin: 0 auto;
+        margin-bottom: 3px;
+    }
+    button{
+        font-size: 2em;
+        margin: 0 auto;
+        display: block;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <h1>Drag the control points to make a cup design inspired by the image below.</h1>
+        <img id="inspiration" src="#" alt="">
+        <div class="cup-creator">
+            <canvas id="cupdisplay" data-processing-sources="CupMesh.pde cup_display.pde" width="500" height="500">
+                <p>Your browser does not support the canvas tag.</p>
+            </canvas>
+            <canvas id="cupcreator" data-processing-sources="CurvePoint.pde cup_creator.pde" width="250" height="500">
+                <p>Your browser does not support the canvas tag.</p>
+            </canvas>
+        </div>
+        <button onclick="location.reload()">Submit Your Design</button>
+    </div>
+
+</body>
+
+</html>
