@@ -26,6 +26,7 @@ void drawContour(){
 	stroke(255, 50, 50);
 	fill(0);
 	strokeWeight(8);
+	strokeJoin(ROUND);
 	beginShape();
 	vertex(0, points.get(0).pos.y);
 	vertex(points.get(0).pos.x, points.get(0).pos.y); //control point at first vertex
